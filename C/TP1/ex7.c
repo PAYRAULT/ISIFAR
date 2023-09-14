@@ -43,7 +43,7 @@ complex_t mult(double l, complex_t z) {
     complex_t res;
 
     res.re = (float)l * z.re;
-    res.im = l * z.im;
+    res.im = (float)l * z.im;
     
     return res;
 }
