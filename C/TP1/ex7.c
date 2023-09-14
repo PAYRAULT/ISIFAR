@@ -48,7 +48,7 @@ complex_t mult(double l, complex_t z) {
     return res;
 }
 
-
+/* Ceci est le programme principal */
 int main(){
     complex_t c1, c2;
     complex_t res;
