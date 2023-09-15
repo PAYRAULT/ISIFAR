@@ -6,11 +6,13 @@ typedef struct {
     float im;
 } complex_t;
 
+/* Prototype des fonctions */
 complex_t sum(complex_t a, complex_t b);
 complex_t prod(complex_t a, complex_t b);
 complex_t inv(complex_t z);
 complex_t mult(double l, complex_t z);
 
+/* Addition de 2 noombres complexes */
 complex_t sum(complex_t a, complex_t b) {
     complex_t res;
 
@@ -20,6 +22,7 @@ complex_t sum(complex_t a, complex_t b) {
     return res;
 }
 
+/* Multiplication de 2 noombres complexes */
 complex_t prod(complex_t a, complex_t b) {
     complex_t res;
 
@@ -29,6 +32,7 @@ complex_t prod(complex_t a, complex_t b) {
     return res;
 }
 
+/* Inverse d'un nombre complexe */
 complex_t inv(complex_t z) {
     complex_t res;
     float diviseur = powf(z.re,2) + powf(z.im, 2);
@@ -39,6 +43,7 @@ complex_t inv(complex_t z) {
     return res;
 }
 
+/* Multiplication d'un nombre complexe par un scalaire */
 complex_t mult(double l, complex_t z) {
     complex_t res;
 
@@ -69,7 +74,7 @@ int main(){
     printf("1 / c1 = (%f, %f)\n", res.re, res.im);
 
     printf("Entrez un entier l: ");
-    scanf("%Lf", &l);
+    scanf("%f", &l);
     res = mult(l, c1);
     printf("l * c1 = (%f, %f)\n", res.re, res.im);
 
