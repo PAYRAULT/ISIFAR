@@ -52,7 +52,7 @@ int main(void)
    t = clock();
    tri_insertion(tab, size);
    t = clock() - t;
-   el1 = ((double) t)/CLOCKS_PER_SEC;
+   el1 = ((double) t*1000)/CLOCKS_PER_SEC;
 
    printf("tri par insertion :\n\n");
    afficher_tableau(tab,size);
@@ -64,14 +64,14 @@ int main(void)
    t = clock();
    tri_shell(tab, size);
    t = clock() - t;
-   el2 = ((double) t)/CLOCKS_PER_SEC;
+   el2 = ((double) t*1000)/CLOCKS_PER_SEC;
 
    printf("tri shell :\n\n");
    afficher_tableau(tab,size);
    printf("\n");
 
-   printf("Temps tri par insertion : %f\n", el1);
-   printf("Temps tri shell : %f\n", el2);
+   printf("Temps tri par insertion : %fms\n", el1);
+   printf("Temps tri shell : %fms\n", el2);
 
    return 0;
 }
