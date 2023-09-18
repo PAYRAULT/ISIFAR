@@ -11,6 +11,7 @@ complex_t sum(complex_t a, complex_t b);
 complex_t prod(complex_t a, complex_t b);
 complex_t inv(complex_t z);
 complex_t mult(double l, complex_t z);
+complex_t square_root(complex_t z);
 
 /* Addition de 2 noombres complexes */
 complex_t sum(complex_t a, complex_t b) {
@@ -55,7 +56,7 @@ complex_t mult(double l, complex_t z) {
 
 
 /* Question c. racine carre d'un nombre complexe */
-complex_t square(complex_t z) {
+complex_t square_root(complex_t z) {
     complex_t res;
     float norme = sqrt(powf(z.re,2) + powf(z.im, 2));
 
@@ -100,18 +101,36 @@ int main(){
     res = mult(l, c1);
     printf("l * c1 = (%f, %f)\n", res.re, res.im);
 
-    c1.re = 25;
-    c1.im = -7;
-    res = square(c1);
+    res = square_root(c1);
     printf("sqrt(c1) = (%f, %f)\n", res.re, res.im);
-    c1.re = 25;
-    c1.im = 0;
-    res = square(c1);
-    printf("sqrt(c1) = (%f, %f)\n", res.re, res.im);
-    c1.re = -25;
-    c1.im = 0;
-    res = square(c1);
-    printf("sqrt(c1) = (%f, %f)\n", res.re, res.im);
+
+    /* polynome c0x^2 + c1x + c2 = 0 */
+    complex_t c0;
+    complex_t d;
+
+    printf("racine du polynome c0^2x + c1x + c2\n");
+    printf("Entrez c0: ");
+    scanf("%f %f", &(c0.re), &(c0.im));
+    printf("Entrez c1: ");
+    scanf("%f %f", &(c1.re), &(c1.im));
+    printf("Entrez c2: ");
+    scanf("%f %f", &(c2.re), &(c2.im));
+
+    /* d = c1*c1 - 4c0c2 */
+    d = sum(prod(c1,c1), mult(-4.0, prod(c0,c2)));
+
+    if(d.re == 0 && d.im == 0) {
+        /*Racine double : -c1 / 2c2*/
+        res = prod(mult(-1.0, c1), inv(mult(2.0, c0)));
+        printf("Racine double: (%f, %f)\n", res.re, res.im);
+    }
+    else {
+        /* 2 racines */
+        res = prod(sum(mult(-1.0, c1), square_root(d)), inv(mult(2.0, c0)));
+        printf("Racine 1: (%f, %f)\n", res.re, res.im);
+        res = prod(sum(mult(-1.0, c1), mult(-1.0, square_root(d))), inv(mult(2.0, c0)));
+        printf("Racine 2: (%f, %f)\n", res.re, res.im);
+    }
 
     return 0;
 }
