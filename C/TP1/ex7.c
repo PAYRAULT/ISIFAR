@@ -53,6 +53,28 @@ complex_t mult(double l, complex_t z) {
     return res;
 }
 
+
+/* Question c. racine carre d'un nombre complexe */
+complex_t square(complex_t z) {
+    complex_t res;
+    float norme = sqrt(powf(z.re,2) + powf(z.im, 2));
+
+    if(z.im != 0) {
+        res.re = sqrt((norme+z.re)/2);
+        res.im = z.im/fabs(z.im)*sqrt((norme-z.re)/2);    
+    }
+    else if (z.re  >= 0) {
+        res.re = sqrt(z.re);
+        res.im = 0;
+    }
+    else {
+        res.re = 0;
+        res.im = sqrt(-z.re);
+    }
+
+    return res;
+}
+
 /* Ceci est le programme principal */
 int main(){
     complex_t c1, c2;
@@ -77,6 +99,19 @@ int main(){
     scanf("%f", &l);
     res = mult(l, c1);
     printf("l * c1 = (%f, %f)\n", res.re, res.im);
+
+    c1.re = 25;
+    c1.im = -7;
+    res = square(c1);
+    printf("sqrt(c1) = (%f, %f)\n", res.re, res.im);
+    c1.re = 25;
+    c1.im = 0;
+    res = square(c1);
+    printf("sqrt(c1) = (%f, %f)\n", res.re, res.im);
+    c1.re = -25;
+    c1.im = 0;
+    res = square(c1);
+    printf("sqrt(c1) = (%f, %f)\n", res.re, res.im);
 
     return 0;
 }
