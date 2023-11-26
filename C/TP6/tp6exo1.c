@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
+#define SIZE_MIN	10
 
 typedef struct  couple_st {
 	int k;
@@ -25,9 +26,9 @@ void print_dic(dic_t d) {
 
 void initialize_dic(dic_t *p) {
 	if(p != NULL) {
-		p->size = 0;
+		p->size = SIZE_MIN;
 		p->len = 0;
-		p->t = NULL;
+		p->t = (couple_t *) calloc(SIZE_MIN, sizeof(couple_t));
 	}
 }
 
@@ -36,7 +37,8 @@ void scan_dic(dic_t *p) {
     printf("Saisir le nombre d'elements: ");
     scanf("%d", &(p->len));
 	if(p->size < 2*p->len) {
-		p->t = (couple_t *) realloc(p->t, 2*p->len*sizeof(couple_t));
+        p->size = 2*p->len;
+		p->t = (couple_t *) realloc(p->t, p->size*sizeof(couple_t));
 		if(p->t == NULL) {
 			exit(-1);
 		}
@@ -346,7 +348,7 @@ int main() {
 		print_dic(p);
 	}
 	c.k = 7;
-	c.v = 8.989;
+	c.v = 14.639;
 	res = add(&p, c);
 	if(res == 1) {
 		print_dic(p);
