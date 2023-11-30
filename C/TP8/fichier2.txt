@@ -1,0 +1,10 @@
+229;Ail;1.49
+842;Asperges;4.5
+50;Betteraves;1.7
+24;Brocolis;1.48
+335;Carottes;3.54
+890;Céleris;1.94
+77;Champignons;1.92
+57;Choux-fleurs;1.73
+85;Concombres;2.69
+69;Courgettes;5.76
