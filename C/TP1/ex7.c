@@ -39,7 +39,7 @@ complex_t inv(complex_t z) {
     float diviseur = powf(z.re,2) + powf(z.im, 2);
 
     res.re = z.re / diviseur;
-    res.im = z.im / diviseur;
+    res.im = -z.im / diviseur;
 
     return res;
 }
@@ -58,7 +58,7 @@ complex_t mult(double l, complex_t z) {
 /* Question c. racine carre d'un nombre complexe */
 complex_t square_root(complex_t z) {
     complex_t res;
-    float norme = sqrt(powf(z.re,2) + powf(z.im, 2));
+    float norme = sqrt(z.re * z.re + z.im* z.im);
 
     if(z.im != 0) {
         res.re = sqrt((norme+z.re)/2);
