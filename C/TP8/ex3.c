@@ -12,6 +12,7 @@
 #include<stdlib.h>
 #include<string.h>
 
+#define MAX_LINES 100
 #define L_LINE_MAX 100
 #define L_NAME_MAX 25
 #define DELIM ";"
@@ -26,7 +27,7 @@ typedef struct data_st
 
 typedef struct{
     int len;
-    data_t tab[L_LINE_MAX];
+    data_t tab[MAX_LINES];
 }liste_t;
 
 
@@ -49,7 +50,7 @@ void print_list(liste_t l){
 
 void append(liste_t *p_l, data_t d) {
     /* verifier qu'il existe au moins une place de libre */
-    if(p_l->len < L_LINE_MAX) {
+    if(p_l->len < MAX_LINES) {
         /* Ajouter la valeur d a la fin et incrementer la longueur de la liste */
         p_l->tab[p_l->len].numero_produit = d.numero_produit;
         strcpy(p_l->tab[p_l->len].nom_produit, d.nom_produit);
