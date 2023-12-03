@@ -118,16 +118,6 @@ int suppress(liste_t *Pl, int n) {
     return 0;
 }
 
-int add(liste_t *Pl, data_t d) {
-   if(Pl->len < L_LINE_MAX) {
-      Pl->tab[Pl->len].numero_produit = d.numero_produit;
-      strcpy(Pl->tab[Pl->len].nom_produit, d.nom_produit);
-      Pl->tab[Pl->len].prix_produit = d.prix_produit;
-      Pl->len += 1;
-   }
-   return 0;
-}
-
 
 int write_data_file(liste_t *Pl, char *nom_fichier) {
    // Ouverture du fichier
@@ -204,7 +194,7 @@ int main(void)
    d1.numero_produit = 57;
    strcpy(d1.nom_produit, "Pomme de terre");
    d1.prix_produit = 2.54;
-   add(&Pl, d1);
+   append(&Pl, d1);
 
    // Test de write_data_file
    write_data_file(&Pl, "fichier4.txt");

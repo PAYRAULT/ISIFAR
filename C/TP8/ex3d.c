@@ -31,20 +31,18 @@ typedef struct data_liste_st
 
 typedef struct liste_st 
 {
-    int len;
     data_liste_t *debut; 
     data_liste_t *fin; 
 } liste_t;
 
 
 void initialize_list(liste_t *P) {
-    P->len = 0;
     P->debut = NULL;
     P->fin = NULL;
 }
 
 void print_list(liste_t *P){
-    if(P->len == 0) {
+    if(P->debut == NULL) {
         printf("Liste vide\n");
     }
     else {
@@ -70,17 +68,16 @@ void append(liste_t *Pl, data_t d) {
     L->line.prix_produit = d.prix_produit;
     L-> next = NULL;
 
-    // Ajouter en fin de liste
-    if(Pl->len == 0) {
+    if(Pl->debut == NULL) {
+        // Ajouter premier de la liste
         Pl->debut = L;
         Pl->fin = L;
     }
     else {
+        // Ajouter en fin de liste
         Pl->fin->next = L;
         Pl->fin = L;
-        Pl->len +=1;
     }
-    Pl->len += 1;
 }
 
 int read_data_file(liste_t *Pl, char *nom_fichier)
@@ -134,15 +131,21 @@ int suppress(liste_t *Pl, int n) {
     L2 = NULL;
     while(L1 != NULL){
         if(L1->line.numero_produit == n) {
-            if(L2 == NULL) {
+            if(L1 == Pl->debut) {
                 // C'est le premiere element
                 Pl->debut = Pl->debut->next;
+            }
+            else if(L1 == Pl->fin) {
+                // C'est le dernier element
+                L2->next = NULL;
+                Pl->fin = L2;
             }
             else {
                 // Supprimer L1
                 L2->next = L1->next;
             }
-            Pl->len -= 1;
+            // Liberer la memoire
+            free(L1);
             return 1;
         }
         L2 = L1;
@@ -208,6 +211,26 @@ int main(void)
     // Test de suppress
     int s;
     i = 77;
+    s = suppress(&Pl, i);
+    if(s == 0) {
+        printf("numero produit %d pas trouve\n", i);
+    }
+    else {
+        print_list(&Pl);
+    }
+
+    // Test de suppress
+    i = 229;
+    s = suppress(&Pl, i);
+    if(s == 0) {
+        printf("numero produit %d pas trouve\n", i);
+    }
+    else {
+        print_list(&Pl);
+    }
+
+    // Test de suppress
+    i = 69;
     s = suppress(&Pl, i);
     if(s == 0) {
         printf("numero produit %d pas trouve\n", i);
