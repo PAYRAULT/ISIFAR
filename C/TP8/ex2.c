@@ -9,9 +9,13 @@
 *  Copyright © 2020 Bertrand GENTOU. All rights reserved.
 */
 #include<stdio.h>
+#include<stdlib.h>
 #include<string.h>
+
+#define L_LINE_MAX 100
 #define L_NAME_MAX 25
 #define DELIM ";"
+
 typedef struct data_st
 {
    int key;
@@ -21,14 +25,32 @@ typedef struct data_st
 
 int main(void)
 {
-   char input[] = "10;truc;10.1";
    data_t d;
-   char *token = strtok(input, DELIM);
-   sscanf(token, "%d", &d.key); // conversion d'un string en entier
-   token = strtok(NULL,DELIM);
-   strcpy(d.name, token); // copie d'un string dans un autre
-   token = strtok(NULL, DELIM);
-   sscanf(token, "%lf", &d.value); // conversion d'un string en double
-   printf("%i;%s;%lf\n",d.key,d.name,d.value);
+   char line[L_LINE_MAX];
+
+   // Ouverture du fichier
+   char nom_fichier[]= "fichier2.txt";
+   FILE *entree=fopen(nom_fichier, "r");
+   if (entree == NULL) {
+        fprintf(stderr,"Erreur d'ouverture en lecture du fichier %s\n", nom_fichier);
+        exit(2);
+   }
+
+   while(fgets(line, L_LINE_MAX, entree) != NULL) {
+      char *token = strtok(line, DELIM);
+
+      sscanf(token, "%d", &d.key); // conversion d'un string en entier
+      token = strtok(NULL,DELIM);
+
+      strcpy(d.name, token); // copie d'un string dans un autre
+      token = strtok(NULL, DELIM);
+
+      sscanf(token, "%lf", &d.value); // conversion d'un string en double
+      printf("%i;%s;%lf\n",d.key,d.name,d.value);
+   }
+
+   // Fermeture du fichier
+   fclose(entree);
+
    return 0;
 }
