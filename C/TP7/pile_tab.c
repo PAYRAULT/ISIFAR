@@ -6,12 +6,19 @@ typedef int data_t;
 
 
 typedef struct pile_st {
-    data_t pile[MAX_PILE];
+    data_t *pile;
     int top;
+    int taille;
 } pile_t;
 
-void init_stack(pile_t *p){
+int init_stack(pile_t *p){
+    p->pile = malloc(sizeof(data_t) * MAX_PILE);
+    if(p->pile == NULL) {
+        return 0;
+    }
     p->top = 0;
+    p->taille = MAX_PILE;
+    return 1;
 }
 
 int is_empty (pile_t *p){
@@ -44,9 +51,16 @@ void print_reversed_stack(pile_t *p){
 }
 
 int push(pile_t *p, data_t x){
-    if(p->top == MAX_PILE) {
-        // La pile est pleine
-        return 0;
+    if(p->top == p->taille) {
+        // La pile est pleine, etendre le tableau
+        p->taille *= 2;
+        data_t * new_table = (data_t*)realloc(p->pile, sizeof(data_t)*p->taille);
+        if(p->pile == NULL) {
+            return 0;
+        }
+        else{
+            p->pile = new_table;
+        }
     }
 
     p->pile[p->top] = x;
@@ -71,10 +85,19 @@ void empty(pile_t *p) {
 
 int main(void){
     pile_t p; 
-    init_stack(&p);
+    int rep;
+    
+    rep = init_stack(&p);
+    if(rep == 1) {
+        printf("initialisation reussie\n");
+    }
+    else {
+        printf("initialisation echouee\n");
+    }
+    
     print_stack(&p);
     print_reversed_stack(&p);
-    for(int i = 0; i<MAX_PILE+1;i++){
+    for(int i = 0; i<MAX_PILE+15;i++){
         if(push(&p,i) != 0){
         }
         else{
