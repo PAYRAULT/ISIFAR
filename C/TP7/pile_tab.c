@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 typedef int data_t;
-#define MAX_PILE    100
+#define MAX_PILE    20
 
 
 typedef struct pile_st {
@@ -56,11 +56,12 @@ int push(pile_t *p, data_t x){
 
 int pop(pile_t *p) {
     if (is_empty(p)) {
+        // La pile est vide
         return -1;
     }
     
     p->top--;   
-    return p->pile[p->top+1];
+    return p->pile[p->top];
 }
 
 void empty(pile_t *p) {
@@ -73,26 +74,28 @@ int main(void){
     init_stack(&p);
     print_stack(&p);
     print_reversed_stack(&p);
-    for(int i = 0; i<3;i++){
+    for(int i = 0; i<MAX_PILE+1;i++){
         if(push(&p,i) != 0){
-            print_stack(&p);
         }
         else{
-            printf("Erreur d'allocation");
+            printf("Erreur pile pleine\n");
         }
     }
+    print_stack(&p);
     print_reversed_stack(&p);
 
-    int elep = pop(&p);
-
-    if (elep != -1) {
-        printf("Élément dépilé : %d\n", elep);
-    } else {
-        printf("La pile est vide \n");
+    for(int i = 0; i < MAX_PILE+1;i++){
+        int elep = pop(&p);
+        if (elep != -1) {
+            printf("Élément dépilé : %d\n", elep);
+        } else {
+            printf("La pile est vide \n");
+        }
     }
+    print_stack(&p);
+    print_reversed_stack(&p);
 
     empty(&p);
-
     printf("Pile à la main\n");
     /* CONSTRUIRE UNE PILE À LA MAIN (JUSTE POUR VOIR)*/
     p.pile[0] = 1;
